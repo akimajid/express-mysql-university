@@ -48,6 +48,27 @@ const classControllers = {
       next()
     }
   },
+  getClassesStudentById : async (req, res, next) => {
+    const { classId } = req.params
+
+    try {
+      const sql = `SELECT *, cs.id as cs_id FROM class_student AS cs
+      JOIN  students AS s ON s.id = cs.student_id
+      WHERE cs.class_id = ${classId}`
+
+      const dbResult = await query(sql)
+
+      return res.status(200).json({
+        message: "Classes found",
+        result: dbResult
+      })
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({
+        message: "Server error"
+      })
+    }
+  }
 }
 
 module.exports = classControllers

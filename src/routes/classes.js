@@ -7,4 +7,6 @@ router.post("/", classControllers.createClass)
 router.patch("/:id", classControllers.editClassById)
 router.delete("/:id", classControllers.deleteClassById)
 
+router.get("/:classId/students", classControllers.getClassesStudentById)
+
 module.exports = router

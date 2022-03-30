@@ -158,6 +158,28 @@ const studentControllers = {
       console.log(err)
       next()
     }
+  },
+  getStudentClasses: async (req, res, next) => {
+    const { studentId } = req.params
+
+    try {
+      const sql = `SELECT * FROM class_student AS cs
+      JOIN classes AS c ON c.id = cs.class_id
+      JOIN lecturers AS l ON l.id = c.lecturer_id
+      WHERE cs.student_id  = ${studentId}`
+
+      const dbResult = await query(sql)
+
+      return res.status(200).json({
+        message: "Data found",
+        result: dbResult
+      })
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({
+        message: "Server error"
+      })
+    }
   }
 }
 
